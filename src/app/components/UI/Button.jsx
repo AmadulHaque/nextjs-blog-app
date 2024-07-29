@@ -1,15 +1,8 @@
 
-'use client'
-
-import { useFormStatus } from 'react-dom'
-
-export function Button({type="submit", classes, title='submit'}) {
-    const { pending } = useFormStatus();
+export function Button({type="submit", classes, title='submit',loadding=false}) {
   return (
-  
-       <>
-            <button type={type} disabled={pending ? true : false} className={classes} >{pending ? 'Submitting...' : title}</button>
-        </>
-
+    <>
+        <button type={type} disabled={loadding ? true : false} className={classes} >{loadding ? 'Submitting...' : title}</button>
+    </>
   )
 }
