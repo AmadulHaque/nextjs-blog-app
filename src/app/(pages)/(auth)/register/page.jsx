@@ -1,4 +1,5 @@
 import { Button } from "@/app/components/UI/Button";
+import IllustrationHero from "@/app/components/UI/Icons/IllustrationHero";
 import Link from "next/link";
 
 export const metadata = {
@@ -12,83 +13,48 @@ export default function Register() {
 
   return (
     <>
-      <div className="bg-gray-50 py-6">
-        <div className="xl:container mx-auto px-3 sm:px-4 xl:px-2">
-          <div className="flex flex-row flex-wrap">
-            <div className="flex-shrink max-w-full w-full lg:w-2/3  overflow-hidden">
-              <div className="w-full py-3">
-                <h2 className="text-gray-800 text-3xl font-bold">
-                  <span className="inline-block h-5 border-l-3 border-red-600 mr-2" /> Register
-                </h2>
-              </div>
-              <div className="flex flex-row flex-wrap -mx-3">
-                <div className="flex-shrink max-w-full w-full px-3 pb-5">
-                  <div className="px-8 py-6 border border-gray-100 bg-white">
-                    <form className="flex flex-wrap flex-row -mx-4">
-                      <div className="flex-shrink max-w-full px-4 w-full md:w-1/2 mb-6">
-                        <label htmlFor="inputfirst4" className="inline-block mb-2"> First name </label>
-                        <input type="text" className="w-full leading-5 relative py-3 px-5 text-gray-800 bg-white border border-gray-100 overflow-x-auto focus:outline-none focus:border-gray-400 focus:ring-0 dark:text-gray-400 dark:bg-gray-700 dark:border-gray-700 dark:focus:border-gray-600" id="inputfirst4" required="" />
-                      </div>
-                      <div className="flex-shrink max-w-full px-4 w-full md:w-1/2 mb-6">
-                        <label htmlFor="inputlast4" className="inline-block mb-2"> Last name </label>
-                        <input type="text" className="w-full leading-5 relative py-3 px-5 text-gray-800 bg-white border border-gray-100 overflow-x-auto focus:outline-none focus:border-gray-400 focus:ring-0 dark:text-gray-400 dark:bg-gray-700 dark:border-gray-700 dark:focus:border-gray-600" id="inputlast4" required="" />
-                      </div>
-                      <div className="flex-shrink max-w-full px-4 w-full md:w-1/2 mb-6">
-                        <label htmlFor="inpuemail4" className="inline-block mb-2"> Email </label>
-                        <input type="email" className="w-full leading-5 relative py-3 px-5 text-gray-800 bg-white border border-gray-100 overflow-x-auto focus:outline-none focus:border-gray-400 focus:ring-0 dark:text-gray-400 dark:bg-gray-700 dark:border-gray-700 dark:focus:border-gray-600" id="inpuemail4" required="" />
-                      </div>
-                      <div className="flex-shrink max-w-full px-4 w-full md:w-1/2 mb-6">
-                        <label htmlFor="inpuemail4" className="inline-block mb-2"> Phone </label>
-                        <input type="email" className="w-full leading-5 relative py-3 px-5 text-gray-800 bg-white border border-gray-100 overflow-x-auto focus:outline-none focus:border-gray-400 focus:ring-0 dark:text-gray-400 dark:bg-gray-700 dark:border-gray-700 dark:focus:border-gray-600" id="inpuemail4" required="" />
-                      </div>
-                      
-                      <div className="flex-shrink max-w-full px-4 w-full mb-6">
-                        <label htmlFor="exampleTextarea1" className="inline-block mb-2"> Address </label>
-                        <textarea className="w-full leading-5 relative py-3 px-5 text-gray-800 bg-white border border-gray-100 overflow-x-auto focus:outline-none focus:border-gray-400 focus:ring-0 dark:text-gray-400 dark:bg-gray-700 dark:border-gray-700 dark:focus:border-gray-600" id="exampleTextarea1" rows={3} defaultValue={""} />
-                      </div>
-              
-                      <div className="flex-shrink max-w-full px-4 w-full">
-                        <Button type="submit" classes="flex items-center py-3 px-5 leading-5 text-gray-100 bg-black hover:text-white hover:bg-gray-900 hover:ring-0 focus:outline-none focus:ring-0" title="Submit"  loader={false} /> 
-                      </div>
-                    </form>
-                    <div className="flex-shrink max-w-full mt-5 mb-6">
-                        <Link href='/login' className="text-gray-700 "> Already have an account? <span className='text-red-600' >Login</span> Here  </Link>
-                    </div>
-
-
+      <section className="ccmpi"> {/* Illustration */} 
+        <div className="c1or4 cbm4u cv89m c9epx cfj2j" aria-hidden="true">
+          <IllustrationHero/>
+        </div>
+        <div className="c0xm3 ccmpi cwd8x cbv9p cffqt">
+          <div className="crett ckxfr cqmr5 cd3md"> {/* Page header */} 
+            <div className="ca2yl cfeqe cbv9p">
+              <h1 className="cv8nv crm28 cdp3t cm97t c7ur1 cv5ei cjniy cqmr5 chc94"> Welcome back to the Community </h1>
+            </div> {/* Form */} 
+            <div className="cg2hf cbv9p">
+              <form>
+                <div className="ckw57">
+                  <div>
+                    <label className="cxjuz" htmlFor="email"> Email </label>
+                    <input id="email" className="c9yrh ctkuh c894v" type="email" placeholder="Your email" required="" />
+                  </div>
+                  <div>
+                    <label className="cxjuz" htmlFor="password"> Password </label>
+                    <input id="password" className="c9yrh ctkuh c894v" type="password" placeholder="Your password" autoComplete="on" required="" />
                   </div>
                 </div>
-              </div>
-            </div>
-            <div className="flex-shrink max-w-full w-full lg:w-1/3 lg:pl-8 lg:pt-14 lg:pb-8 order-first lg:order-last">
-              <div className="w-full bg-white">
-                <div className="mb-6">
-                  <div className="p-4 bg-gray-100">
-                    <h2 className="text-lg font-bold">Most Popular</h2>
-                  </div>
-                  <ul className="post-number">
-                    <li className="border-b border-gray-100 hover:bg-gray-50">
-                      <a className="text-lg font-bold px-6 py-3 flex flex-row items-center" href="#"> Why the world would end without political polls </a>
-                    </li>
-                    <li className="border-b border-gray-100 hover:bg-gray-50">
-                      <a className="text-lg font-bold px-6 py-3 flex flex-row items-center" href="#"> Meet The Man Who Designed The Ducati Monster </a>
-                    </li>
-                    <li className="border-b border-gray-100 hover:bg-gray-50">
-                      <a className="text-lg font-bold px-6 py-3 flex flex-row items-center" href="#"> 2020 Audi R8 Spyder spy shots release </a>
-                    </li>
-                    <li className="border-b border-gray-100 hover:bg-gray-50">
-                      <a className="text-lg font-bold px-6 py-3 flex flex-row items-center" href="#"> Lamborghini makes Huracán GT3 racer faster for 2019 </a>
-                    </li>
-                    <li className="border-b border-gray-100 hover:bg-gray-50">
-                      <a className="text-lg font-bold px-6 py-3 flex flex-row items-center" href="#"> ZF plans $14 billion autonomous vehicle push, concept van </a>
-                    </li>
-                  </ul>
+                <div className="cphsf">
+                  <button className="c4pyj cmoq7 cwams cs3c2 c894v">Sign In</button>
                 </div>
-              </div>
+              </form> {/* Divider */} 
+              <div className="cyv0x ca4hs c84kl">
+                <div className="cvkh0 cc2e0 cnjis cxgft" aria-hidden="true" />
+                <div className="cpb42 crs6u c8dwh">Or</div>
+                <div className="cvkh0 cc2e0 ccwt3 cxgft" aria-hidden="true" />
+              </div> {/* Social login */} 
+              <button className="c15ll cb3vt cv8nv cjl5d c2h7h czhaz cwvxj c9j93 ccmpi cs3c2 c894v cbsef c84kl cmu8g">
+                <div className="cyv0x c609k c84kl">
+                  <svg className="c9y4x czcmj crhvt c0zsg" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M15.679 6.545H8.043v3.273h4.328c-.692 2.182-2.401 2.91-4.363 2.91a4.727 4.727 0 1 1 3.035-8.347l2.378-2.265A8 8 0 1 0 8.008 16c4.41 0 8.4-2.909 7.67-9.455Z" />
+                  </svg>
+                </div>
+                <span className="c0hys cww3t">Sign In With Google</span>
+              </button>
             </div>
           </div>
         </div>
-      </div>
+      </section>
     </>
   );
 }
