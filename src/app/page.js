@@ -1,5 +1,4 @@
-import Image from "next/image";
-import Hero from "./components/Home/hero";
+import Hero from "./components/Home/Hero";
 import Item from "./components/Post/Item";
 import Link from "next/link";
 import CategoryPost from "./components/Layout/CategoryPost";
