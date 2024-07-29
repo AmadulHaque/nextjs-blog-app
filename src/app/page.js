@@ -1,4 +1,4 @@
-import Hero from "./components/Home/Hero";
+import HeroSec from "./components/Home/HeroSec";
 import Item from "./components/Post/Item";
 import Link from "next/link";
 import CategoryPost from "./components/Layout/CategoryPost";
@@ -7,8 +7,8 @@ export default function Home() {
   return (
     <> 
 
-      {/* hero */}
-        <Hero/>
+      {/* Hero section */}
+        <HeroSec/>
 
 
     <section>

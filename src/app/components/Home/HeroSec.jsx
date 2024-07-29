@@ -1,7 +1,7 @@
 import React from 'react'
 import IllustrationHero from '../UI/Icons/IllustrationHero'
 
-export default function Hero() {
+export default function HeroSec() {
   return (
     <>
         <section className="c4xpn ccmpi">
