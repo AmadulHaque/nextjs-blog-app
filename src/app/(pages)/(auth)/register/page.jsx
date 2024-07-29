@@ -1,48 +1,74 @@
+"use client"
+import { useFormState } from 'react-dom'
 import { Button } from "@/app/components/UI/Button";
 import IllustrationHero from "@/app/components/UI/Icons/IllustrationHero";
-import Link from "next/link";
+import { submitForm } from "./actions";
 
-export const metadata = {
-  title:"MyBlog || Register ",
-  description:"MyBlog || Register "
-}
+// export const metadata = {
+//   title:"MyBlog || Register ",
+//   description:"MyBlog || Register "
+// }
+
+const initialState = {
+  errors: {},
+  message: '',
+};
 
 
 export default function Register() {
- 
+  const [state, formAction] = useFormState(submitForm, initialState);
+
+
+  console.log(initialState.errors);
 
   return (
     <>
-      <section className="ccmpi"> {/* Illustration */} 
+      <section className="ccmpi"> 
         <div className="c1or4 cbm4u cv89m c9epx cfj2j" aria-hidden="true">
           <IllustrationHero/>
         </div>
         <div className="c0xm3 ccmpi cwd8x cbv9p cffqt">
-          <div className="crett ckxfr cqmr5 cd3md"> {/* Page header */} 
+          <div className="crett ckxfr cqmr5 cd3md"> 
             <div className="ca2yl cfeqe cbv9p">
-              <h1 className="cv8nv crm28 cdp3t cm97t c7ur1 cv5ei cjniy cqmr5 chc94"> Welcome back to the Community </h1>
-            </div> {/* Form */} 
-            <div className="cg2hf cbv9p">
-              <form>
+              <h1 className="cv8nv crm28 cdp3t cm97t c7ur1 cv5ei cjniy  chc94"> Welcome back to the Community </h1>
+              <p  className="cqmr5" >Enter the information while you are registering</p>
+            </div>
+            <div className="cg2hf cbv9p"> 
+
+              <form action={formAction} >
                 <div className="ckw57">
                   <div>
+                    <label className="cxjuz" htmlFor="name">Full Name </label>
+                    <input id="name" type="name" name="name" className="c9yrh ctkuh c894v"  placeholder="Your name" required="" />
+                  </div>
+                  <div>
+                    <label className="cxjuz" htmlFor="phone">Full Phone </label>
+                    <input id="phone"  type="phone"  className="c9yrh ctkuh c894v"placeholder="Your phone" required="" />
+                  </div>
+                  <div>
                     <label className="cxjuz" htmlFor="email"> Email </label>
-                    <input id="email" className="c9yrh ctkuh c894v" type="email" placeholder="Your email" required="" />
+                    <input id="email" type="email" name="email" className="c9yrh ctkuh c894v"  placeholder="Your email" required="" />
                   </div>
                   <div>
                     <label className="cxjuz" htmlFor="password"> Password </label>
-                    <input id="password" className="c9yrh ctkuh c894v" type="password" placeholder="Your password" autoComplete="on" required="" />
+                    <input id="password" type="password" className="c9yrh ctkuh c894v"  placeholder="Your password" autoComplete="on" required="" />
+                  </div>
+                  <div>
+                    <label className="cxjuz" htmlFor="password"> address </label>
+                    <textarea name="address"  className="c9yrh ctkuh c894v" placeholder="Your address"  id=""></textarea>
                   </div>
                 </div>
                 <div className="cphsf">
-                  <button className="c4pyj cmoq7 cwams cs3c2 c894v">Sign In</button>
+                  <Button classes="c4pyj cmoq7 cwams cs3c2 c894v" />
                 </div>
-              </form> {/* Divider */} 
+                {state.message && <p>{state.message}</p>}
+              </form> 
+              
               <div className="cyv0x ca4hs c84kl">
                 <div className="cvkh0 cc2e0 cnjis cxgft" aria-hidden="true" />
                 <div className="cpb42 crs6u c8dwh">Or</div>
                 <div className="cvkh0 cc2e0 ccwt3 cxgft" aria-hidden="true" />
-              </div> {/* Social login */} 
+              </div>
               <button className="c15ll cb3vt cv8nv cjl5d c2h7h czhaz cwvxj c9j93 ccmpi cs3c2 c894v cbsef c84kl cmu8g">
                 <div className="cyv0x c609k c84kl">
                   <svg className="c9y4x czcmj crhvt c0zsg" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">

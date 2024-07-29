@@ -18,7 +18,7 @@ export default function Login() {
         <div className="c0xm3 ccmpi cwd8x cbv9p cffqt">
           <div className="crett ckxfr cqmr5 cd3md"> {/* Page header */} 
             <div className="ca2yl cfeqe cbv9p">
-              <h1 className="cv8nv crm28 cdp3t cm97t c7ur1 cv5ei cjniy cqmr5 chc94"> Welcome back to the Community </h1>
+              <h1 className="cv8nv crm28 cdp3t cm97t c7ur1 cv5ei cjniy cqmr5 chc94"> Login  </h1>
             </div> {/* Form */} 
             <div className="cg2hf cbv9p">
               <form>
