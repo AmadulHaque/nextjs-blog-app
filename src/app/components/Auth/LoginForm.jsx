@@ -14,25 +14,24 @@ export default function LoginForm() {
     const handleSubmit = async (event) => {
         event.preventDefault()
         const formData = new FormData(event.target)
-        const email = formData.get('email')
-        const password = formData.get('password')
+       
         // loadding true
         seTLoadding(true)
 
         const response = await LoginUser(formData)
 
-        console.log(response);
-
         if (response.success) {
           setState({ message: response.message, errors: {} })
+
           // 1.0 second wait than router push
           setTimeout(() => {
-            router.push('/login');
+            router.push('/dashboard');
           }, 1000);
         } else {
-          setState({ message: '', errors: response.errors })
+            const errors = response.errors; 
+            setState({ message: '', errors:errors })
         }
-    
+  
         seTLoadding(false);return;
     }
 

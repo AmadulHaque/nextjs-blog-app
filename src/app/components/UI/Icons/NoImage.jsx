@@ -5,8 +5,8 @@ export default function NoImage(width='50px' ,height = '50px') {
     <>
         <svg
         fill="#000000"
-        width={width}
-        height={height}
+        width='50px'
+        height='50px'
         viewBox="0 0 32 32"
         id="icon"
         xmlns="http://www.w3.org/2000/svg"

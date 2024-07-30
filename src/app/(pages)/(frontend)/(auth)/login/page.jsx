@@ -21,7 +21,7 @@ export default async function Login() {
               <h1 className="cv8nv crm28 cdp3t cm97t c7ur1 cv5ei cjniy cqmr5 chc94">Login</h1>
             </div>
             <div className="cg2hf cbv9p">
-                 <LoginForm/>
+                <LoginForm/>
             </div>
           </div>
         </div>

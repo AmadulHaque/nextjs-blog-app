@@ -1,4 +1,4 @@
-import CategoryPost from '@/app/components/Layout/CategoryPost'
+import CategoryPost from '@/app/components/Layout/Frontend/CategoryPost'
 import NoImage from '@/app/components/UI/Icons/NoImage'
 import Link from 'next/link'
 import React from 'react'
