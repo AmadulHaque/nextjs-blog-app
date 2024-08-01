@@ -4,8 +4,8 @@ import Link from 'next/link'
 import Select from '@/app/components/UI/Select'
 import { Button } from "@/app/components/UI/Button";
 import { useRouter } from 'next/navigation';
-import { CreateCategory } from '@/app/(pages)/actions/category';
-import SingleImageUpload from '@/app/components/UI/SingleImageUpload';
+import { CreateCategory , UpdateCategory } from '@/app/(pages)/actions/category';
+import SingleImageUpload from '../UI/SingleImageUpload';
 
 
 const items = [
@@ -27,12 +27,12 @@ const items = [
   
 ]
 
-export default function page() {
+export default function CategoryForm({initialvalue={}}) {
   const [state, setState] = useState({ message: '', errors: {} })
   const [loadding, seTLoadding] = useState(false)
-  const [status, setStatus] = useState(1)
+  const status_id = initialvalue ?  initialvalue.status : 1;
+  const [status, setStatus] = useState(status_id)
   const router = useRouter()
-
 
 
   const handleStatusFilter = (event) => {
@@ -51,12 +51,17 @@ export default function page() {
       formData.delete('image');
     }
 
-
     // loadding true
     seTLoadding(true)
 
+    let response;
 
-    const response = await CreateCategory(formData)
+    if (initialvalue) {
+      formData.append('_method', 'PUT');
+      response = await UpdateCategory(formData,initialvalue.id)
+    }else{
+      response = await CreateCategory(formData)
+    }
 
     if (response.success) {
       setState({ message: response.message, errors: {} })
@@ -86,7 +91,7 @@ export default function page() {
               <div className="sm:col-span-2 sm:col-start-1 mb-2">
                 <label htmlFor="name" className="block text-sm font-medium leading-6 text-gray-900"> Category Name </label>
                 <div className="mt-2">
-                  <input id="name" name="name" type="text" placeholder='Category name...' autoComplete="address-level2" className="pl-2  py-1.5  block w-full rounded-md border-0 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" />
+                  <input id="name" name="name" type="text" defaultValue={initialvalue?.name} placeholder='Category name...' autoComplete="address-level2" className="pl-2  py-1.5  block w-full rounded-md border-0 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" />
                 </div>
                 {state.errors.name && <p className="text-red-700">{state.errors.name}</p>}
               </div>
@@ -94,16 +99,17 @@ export default function page() {
               <div className="sm:col-span-2 sm:col-start-1">
                 <label htmlFor="city" className="block text-sm font-medium leading-6 text-gray-900"> Category Status </label>
                 <div className="mt-2">
-                  <Select items={items} defaultValue={0} onchange={handleStatusFilter}  />
+                  <Select items={items} defaultValue={status_id - 1} onchange={handleStatusFilter}  />
                 </div>
                 {state.errors.status && <p className="text-red-700">{state.errors.status}</p>}
               </div>
 
-              <div className="sm:col-span-2 sm:col-start-1 mt-3">
-                  {/* <input type="file" name='image' /> */}
+              <div className="sm:col-span-2 sm:col-start-1 mt-2">
+                <div className="mt-2">
 
-                  <SingleImageUpload title=" Category photo" />
-
+                  <SingleImageUpload name='image' title=" Category photo" initialPhoto={initialvalue?.image} />
+           
+                </div>
                 {state.errors.image && <p className="text-red-700">{state.errors.image}</p>}
               </div>
 

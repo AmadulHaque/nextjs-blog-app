@@ -1,5 +1,6 @@
 import { Inter } from "next/font/google";
 import "./globals.css";
+import { Toaster } from "react-hot-toast";
 
 
 
@@ -17,6 +18,12 @@ export default function RootLayout({ children }) {
 
           {children}
 
+
+          
+          <Toaster
+          position="bottom-center"
+          reverseOrder={false}
+        />
       </body>
     </html>
   );

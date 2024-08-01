@@ -55,7 +55,7 @@ export default function LoginForm() {
             </div>
 
             <div className="cphsf">
-            <Button classes="c4pyj cmoq7 cwams cs3c2 c894v" loadding={loadding} />
+              <Button classes="c4pyj cmoq7 cwams cs3c2 c894v" loadding={loadding} />
             </div>
 
             {state.message && <p className="mt-5 text-center ">{state.message}</p>} 
