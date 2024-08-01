@@ -1,3 +1,6 @@
+import CategoryIcon from "../UI/Icons/CategoryIcon";
+import HomeIcon from "../UI/Icons/HomeIcon";
+
 const ADMIN = 1;
 const MODERATOR = 2;
 const USER = 3;
@@ -5,13 +8,13 @@ const USER = 3;
 export const menu = [
   {
     title: 'Dashboard',
-    icon: 'dashboard-icon',
+    icon: <HomeIcon/>,
     href: '/dashboard',
-    roles: [ADMIN, MODERATOR, USER], 
+    roles: [ADMIN, MODERATOR, USER],
   },
   {
     title: 'Category',
-    icon: 'Category-icon',
+    icon: <CategoryIcon/>,
     href: '/categories',
     roles: [ADMIN],
     // subMenu: [

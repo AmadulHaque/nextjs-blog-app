@@ -21,7 +21,7 @@ export async function LoginUser(formData) {
   const userData = validation.data;
 
   try {
-    const response = await fetch('http://localhost:8000/api/oauth/login', {
+    const response = await fetch('http://localhost:8000/api/auth/login', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(userData),

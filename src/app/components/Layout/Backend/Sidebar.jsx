@@ -3,15 +3,22 @@ import { useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { Transition } from '@headlessui/react';
+import { usePathname } from "next/navigation";
+
 
 export default function Sidebar({ isSidebarOpen, toggleSidebarMenu, menuItems }) {
   const [openSubmenus, setOpenSubmenus] = useState({});
+  const pathname = usePathname();
 
   const toggleSubmenu = (title) => {
     setOpenSubmenus(prev => ({
-      ...prev,
+      // ...prev,
       [title]: !prev[title]
     }));
+  };
+
+  const isActive = (href) => {
+    return pathname === href || pathname.startsWith(href);
   };
 
   return (
@@ -43,12 +50,12 @@ export default function Sidebar({ isSidebarOpen, toggleSidebarMenu, menuItems })
       >
         {/* Sidebar header */}
         <div className={`flex items-center justify-between flex-shrink-0 p-2 ${ !isSidebarOpen ? 'lg:justify-center' : '' }`} >
-          <span className="p-2 text-xl font-semibold leading-8 tracking-wider uppercase whitespace-nowrap flex gap-1">
+          <Link href='/dashboard' className="p-2 text-xl font-semibold leading-8 tracking-wider uppercase whitespace-nowrap flex gap-1">
             <Image src="https://preview.cruip.com/community/images/logo.svg" width={32} height={32} alt="Community" />
             <span className={`${!isSidebarOpen ? 'lg:hidden' : ''}`}>
               My Blog
             </span>
-          </span>
+          </Link>
           <button  onClick={toggleSidebarMenu}  className="p-2 rounded-md lg:hidden">
             <svg    className="w-6 h-6 text-gray-600"    xmlns="http://www.w3.org/2000/svg"    fill="none"    viewBox="0 0 24 24"    stroke="currentColor"  >
               <path  strokeLinecap="round"  strokeLinejoin="round"  strokeWidth="2"  d="M6 18L18 6M6 6l12 12"/>
@@ -60,13 +67,9 @@ export default function Sidebar({ isSidebarOpen, toggleSidebarMenu, menuItems })
           <ul className="p-2 overflow-hidden">
             {menuItems.map((item) => (
               <li key={item.title}>
-                <Link href={item.href} onClick={() => item.subMenu.length > 0 ? toggleSubmenu(item.title) : ""}  className={`flex  items-center p-2  rounded-md hover:bg-gray-100 ${    !isSidebarOpen ? 'justify-center' : ''  }`}>
+                <Link href={item.href} onClick={() => item.subMenu.length > 0 ? toggleSubmenu(item.title) : ""}  className={`flex ${  isActive(item.href) ? 'bg-gray-200' : '' }  items-center p-2  rounded-md hover:bg-gray-100 ${    !isSidebarOpen ? 'justify-center' : ''  }`}>
                   <span>
-
-                    <svg className="w-6 h-6 text-gray-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
-                    </svg>
-
+                    {item.icon}
                   </span>
                   <span className={`ml-2 ${!isSidebarOpen ? 'lg:hidden' : ''}`}>
                     {item.title}

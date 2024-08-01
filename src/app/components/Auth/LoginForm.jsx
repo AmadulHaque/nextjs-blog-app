@@ -25,7 +25,8 @@ export default function LoginForm() {
 
           // 1.0 second wait than router push
           setTimeout(() => {
-            router.push('/dashboard');
+            // router.push('/dashboard');
+            window.location.href = '/dashboard'
           }, 1000);
         } else {
             const errors = response.errors; 
