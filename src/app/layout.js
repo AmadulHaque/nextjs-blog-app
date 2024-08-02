@@ -2,6 +2,7 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import { Toaster } from "react-hot-toast";
 
+import NextTopLoader from 'nextjs-toploader';
 
 
 const inter = Inter({ subsets: ["latin"] });
@@ -15,16 +16,27 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body className={`${inter.className} cryww cs22w cyksu cfglz chz9p`}>
-
           {children}
 
 
           
           <Toaster
-          position="bottom-center"
-          reverseOrder={false}
-        />
-      </body>
+            position="bottom-center"
+            reverseOrder={false}
+          />
+     
+            <NextTopLoader
+              color="#6366f1"
+              initialPosition={0.08}
+              crawlSpeed={200}
+              height={3}
+              crawl={true}
+              showSpinner={true}
+              easing="ease"
+              speed={200}
+              shadow="0 0 10px #2299DD,0 0 5px #2299DD"
+            />
+            </body>
     </html>
   );
 }
