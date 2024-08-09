@@ -8,6 +8,9 @@ import { useRouter } from "next/navigation";
 import { CreateCategory } from "@/app/(pages)/actions/category";
 import SingleImageUpload from "@/app/components/UI/SingleImageUpload";
 
+import ReactQuill from "react-quill";
+import "react-quill/dist/quill.snow.css";
+
 const items = [
   {
     title: "Published",
@@ -32,6 +35,7 @@ export default function Page() {
   const [loading, setLoading] = useState(false);
   const [status, setStatus] = useState(1);
   const router = useRouter();
+  const [content, setContent] = useState("");
 
   const handleStatusFilter = (event) => {
     setStatus(event.value);
@@ -66,6 +70,45 @@ export default function Page() {
 
     setLoading(false);
     return;
+  };
+
+  // const handleImageUpload = () => {
+  //   const input = document.createElement("input");
+  //   input.setAttribute("type", "file");
+  //   input.setAttribute("accept", "image/*");
+  //   input.click();
+
+  //   input.onchange = async () => {
+  //     const file = input.files[0];
+  //     const reader = new FileReader();
+
+  //     reader.onload = () => {
+  //       const quill = document.querySelector(".ql-editor");
+  //       const range = quill.getSelection(true);
+  //       quill.insertEmbed(range.index, "image", reader.result);
+  //       quill.setSelection(range.index + 1);
+  //     };
+
+  //     reader.readAsDataURL(file);
+  //   };
+  // };
+
+  const modules = {
+    toolbar: {
+      container: [
+        [{ header: "1" }, { header: "2" }, { font: [] }],
+        [{ size: [] }],
+        ["bold", "italic", "underline", "strike", "blockquote"],
+        [
+          { list: "ordered" },
+          { list: "bullet" },
+          { indent: "-1" },
+          { indent: "+1" },
+        ],
+        ["link", "image"],
+        ["clean"],
+      ], 
+    },
   };
 
   return (
@@ -120,6 +163,21 @@ export default function Page() {
                 {state.errors.status && (
                   <p className="text-red-700">{state.errors.status}</p>
                 )}
+              </div>
+
+              <div className="sm:col-span-2 sm:col-start-1 mt-3">
+                <label
+                  htmlFor="city"
+                  className="block text-sm font-medium leading-6 text-gray-900"
+                >
+                  Content
+                </label>
+                <ReactQuill
+                  theme="snow"
+                  value={content}
+                  onChange={setContent}
+                  modules={modules}
+                />
               </div>
 
               <div className="sm:col-span-2 sm:col-start-1 mt-3">

@@ -29,7 +29,7 @@ const items = [
 
 export default function page() {
   const [state, setState] = useState({ message: '', errors: {} })
-  const [loadding, seTLoadding] = useState(false)
+  const [loading, seTloading] = useState(false)
   const [status, setStatus] = useState(1)
   const router = useRouter()
 
@@ -52,8 +52,8 @@ export default function page() {
     }
 
 
-    // loadding true
-    seTLoadding(true)
+    // loading true
+    seTloading(true)
 
 
     const response = await CreateCategory(formData)
@@ -70,7 +70,7 @@ export default function page() {
         setState({ message: '', errors:errors })
     }
 
-    seTLoadding(false);return;
+    seTloading(false);return;
 }
 
 
@@ -112,7 +112,7 @@ export default function page() {
 
           <div className="mt-6 flex items-center justify-end gap-x-6">
             <Link href="/categories" className="text-sm font-semibold leading-6 text-gray-900"> Cancel </Link>
-            <Button classes="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600v" loadding={loadding} title='save' />
+            <Button classes="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600v" loading={loading} title='save' />
           </div>
         
         </div>

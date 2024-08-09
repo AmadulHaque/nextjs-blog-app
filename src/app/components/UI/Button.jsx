@@ -1,8 +1,14 @@
-
-export function Button({type="submit", classes, title='submit',loadding=false}) {
+export function Button({
+  type = "submit",
+  classes,
+  title = "submit",
+  loading = false,
+}) {
   return (
     <>
-        <button type={type} disabled={loadding ? true : false} className={classes} >{loadding ? 'Submitting...' : title}</button>
+      <button type={type} disabled={loading ? true : false} className={classes}>
+        {loading ? "Submitting..." : title}
+      </button>
     </>
-  )
+  );
 }

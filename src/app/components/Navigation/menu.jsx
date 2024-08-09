@@ -7,15 +7,21 @@ const USER = 3;
 
 export const menu = [
   {
-    title: 'Dashboard',
-    icon: <HomeIcon/>,
-    href: '/dashboard',
+    title: "Dashboard",
+    icon: <HomeIcon />,
+    href: "/dashboard",
     roles: [ADMIN, MODERATOR, USER],
   },
   {
-    title: 'Category',
-    icon: <CategoryIcon/>,
-    href: '/categories',
+    title: "Post",
+    icon: <CategoryIcon />,
+    href: "/posts",
+    roles: [ADMIN, MODERATOR],
+  },
+  {
+    title: "Category",
+    icon: <CategoryIcon />,
+    href: "/categories",
     roles: [ADMIN],
     // subMenu: [
     //   {
@@ -30,5 +36,4 @@ export const menu = [
     //   },
     // ],
   },
-
 ];
