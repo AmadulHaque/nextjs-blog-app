@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { CategorList } from "../../actions/category";
+import { CategoryList } from "../../actions/category";
 import Image from "next/image";
 import no_photo from "@/app/assets/images/no_photo.jpg";
 import Pagination from "@/app/components/UI/Pagination";
@@ -11,7 +11,7 @@ export default async function page({ searchParams }) {
   const searchQuery = searchParams.search || "";
   const statusFilter = searchParams.status || "";
 
-  const { data } = await CategorList(currentPage, searchQuery, statusFilter);
+  const { data } = await CategoryList(currentPage, searchQuery, statusFilter);
 
   return (
     <>

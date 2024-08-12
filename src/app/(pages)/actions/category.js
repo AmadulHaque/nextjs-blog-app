@@ -3,12 +3,12 @@
 import { getSession } from "@/lib/session";
 import { revalidatePath } from "next/cache";
 
-export async function CategorList(page = 1, search = "", status = "") {
+export async function CategoryList(page = 1, search = "", status = "", perPage=15 ) {
   try {
     const session = await getSession();
 
     const response = await fetch(
-      `http://localhost:8000/api/categories?page=${page}&search=${search}&status=${status}`,
+      `http://localhost:8000/api/categories?page=${page}&search=${search}&status=${status}&perPage=${perPage}`,
       {
         method: "GET",
         headers: {

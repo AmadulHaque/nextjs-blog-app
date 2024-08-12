@@ -35,7 +35,7 @@ export default function SingleImageUpload({name='image', title="photo", initialP
     return (
     <>
         <div className="col-span-full">
-            <label htmlFor="cover-photo" className="block text-sm font-medium leading-6 text-gray-900">
+            <label htmlFor="cover-photo" className="block text-sm font-bold leading-6 text-gray-900">
             {title}
             </label>
             <label  htmlFor="file-upload" >
