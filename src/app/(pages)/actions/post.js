@@ -76,3 +76,111 @@ export async function CreatePost(formData) {
     };
   }
 }
+
+
+export async function PostShow(id) {
+  try {
+    const session = await getSession();
+
+    const response = await fetch(`http://localhost:8000/api/posts/${id}`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+        Authorization: session.token ? `Bearer ${session.token}` : "",
+      },
+    });
+
+    const resData = await response.json();
+
+    if (!response.ok) {
+      return { success: false, errors: resData };
+    }
+
+    // Revalidate the necessary path
+    revalidatePath("/posts");
+
+    return {
+      success: true,
+      message: "Post show successfully",
+      data: resData.data,
+    };
+  } catch (error) {
+    return {
+      success: false,
+      errors: { global: "An error occurred during Post fetch" },
+    };
+  }
+}
+
+
+
+export async function UpdatePost(formData,id) {
+  const session = await getSession();
+  try {
+    const response = await fetch("http://localhost:8000/api/posts/"+id, {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        Authorization: session.token ? `Bearer ${session.token}` : "",
+      },
+      body: formData,
+    });
+
+    const resData = await response.json();
+
+    if (!response.ok) {
+      return resData;
+    }
+
+    // Revalidate the necessary path
+    revalidatePath("/posts");
+
+    return {
+      success: true,
+      message: "Post updated successfully",
+      data: [],
+    };
+  } catch (error) {
+    console.log(error);
+    return {
+      success: false,
+      errors: { global: "An error occurred during post" },
+    };
+  }
+}
+
+export async function PostDelete(id) {
+  try {
+    const session = await getSession();
+
+    const response = await fetch(`http://localhost:8000/api/posts/${id}`, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+        Authorization: session.token ? `Bearer ${session.token}` : "",
+      },
+    });
+
+    const resData = await response.json();
+
+    if (!response.ok) {
+      return { success: false, errors: resData };
+    }
+
+    // Revalidate the necessary path
+    revalidatePath("/posts");
+
+    return {
+      success: true,
+      message: "Post deleted successfully",
+      data: [],
+    };
+  } catch (error) {
+    return {
+      success: false,
+      errors: { global: "An error occurred during post deleted" },
+    };
+  }
+}

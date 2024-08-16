@@ -4,8 +4,8 @@ import Image from "next/image";
 import no_photo from "@/app/assets/images/no_photo.jpg";
 import Link from "next/link";
 import Alert from "../UI/Alert";
-import { CategorDelete } from "@/app/(pages)/actions/category";
 import toast from "react-hot-toast";
+import { PostDelete } from "@/app/(pages)/actions/post";
 
 export default function PostTable({ data }) {
   const [status, setStatus] = useState(false);
@@ -17,11 +17,11 @@ export default function PostTable({ data }) {
   };
 
   const handleConfirmDelete = async () => {
-    // const response = await CategorDelete(currentId);
-    // if (response.success) {
-    //   setStatus(false);
-    //   toast.success(response.message);
-    // }
+    const response = await PostDelete(currentId);
+    if (response.success) {
+      setStatus(false);
+      toast.success(response.message);
+    }
   };
 
   const formattedDate = (value) => {

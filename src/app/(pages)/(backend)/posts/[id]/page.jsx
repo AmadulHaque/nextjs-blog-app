@@ -9,7 +9,7 @@ import SingleImageUpload from "@/app/components/UI/SingleImageUpload";
 
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
-import { CreatePost } from "@/app/(pages)/actions/post";
+import { UpdatePost, PostShow } from "@/app/(pages)/actions/post";
 import { CategoryList } from "@/app/(pages)/actions/category";
 
 const items = [
@@ -30,20 +30,24 @@ const items = [
   },
 ];
 
-export default function Page() {
+export default function Page({params}) {
+
   const [state, setState] = useState({ message: "", errors: {} });
   const [loading, setLoading] = useState(false);
   const [categories, setCategories] = useState([]);
   const [status, setStatus] = useState(1);
   const router = useRouter();
   const [content, setContent] = useState("");
+  const [post, setPost] = useState({});
 
   const handleStatusFilter = (event) => {
     setStatus(event.value);
   };
 
   useEffect(() => {
+    fetchPost();
     fetchCategory();
+    setContent(post?.content)
   }, []);
 
   const fetchCategory = async () => {
@@ -52,7 +56,16 @@ export default function Page() {
       setCategories(data.categories);
     
     } catch (error) {
-      console.error("Error  : ", error);
+      console.error("Error : ", error);
+    }
+  };
+
+  const fetchPost = async () => {
+    try {
+      const {data}  = await PostShow(params.id);
+      setPost(data);
+    } catch (error) {
+      console.error("Error : ", error);
     }
   };
 
@@ -64,6 +77,7 @@ export default function Page() {
     const formData = new FormData(event.target);
     formData.append("status", status);
     formData.append("content", content);
+    formData.append("_method", "PUT");
     let img = formData.get("thumbnail");
     if (!img.name) {
       formData.delete("thumbnail");
@@ -72,7 +86,7 @@ export default function Page() {
     // Set loading to true
     setLoading(true);
 
-    const response = await CreatePost(formData);
+    const response = await UpdatePost(formData, params.id);
 
     console.log(response);
     
@@ -82,10 +96,10 @@ export default function Page() {
 
       // 1.0 second wait before router push
       setTimeout(() => {
-        router.push("/categories");
+        router.push("/posts");
       }, 1000);
     } else {
-      const errors = response.errors;
+      const errors = response.errors; 
       setState({ message: "", errors: errors });
     }
 
@@ -111,6 +125,7 @@ export default function Page() {
     },
   };
 
+  
   return (
     <>
       <form onSubmit={handleSubmit}>
@@ -125,7 +140,7 @@ export default function Page() {
               <div className="sm:col-span-2 sm:col-start-1 mb-2">
                 <label  htmlFor="title"  className="block text-sm font-medium leading-6 text-gray-900"> Post title</label>
                 <div className="mt-2">
-                  <input  id="title"  name="title"  type="text"  placeholder="Post title..."  autoComplete="address-level2"  className="pl-2  py-1.5  block w-full rounded-md border-0 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"/>
+                  <input  id="title"  name="title"  type="text"  placeholder="Post title..."  defaultValue={post?.title} autoComplete="address-level2"  className="pl-2  py-1.5  block w-full rounded-md border-0 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"/>
                 </div>
                 {state.errors.title && (
                   <p className="text-red-700">{state.errors.title}</p>
@@ -136,7 +151,7 @@ export default function Page() {
               <div className="sm:col-span-2 sm:col-start-1 mb-2">
                 <label  htmlFor="short_description"  className="block text-sm font-medium leading-6 text-gray-900"> Post description</label>
                 <div className="mt-2">
-                  <textarea  id="short_description"  name="short_description"  type="text"  placeholder="Description..."  autoComplete="address-level2"  className="pl-2  py-1.5  block w-full rounded-md border-0 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"></textarea>
+                  <textarea  id="short_description"  name="short_description" defaultValue={post?.short_description}  type="text"  placeholder="Description..."  autoComplete="address-level2"  className="pl-2  py-1.5  block w-full rounded-md border-0 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"></textarea>
                 </div>
                 {state.errors.short_description && (
                   <p className="text-red-700">{state.errors.short_description}</p>
@@ -149,7 +164,7 @@ export default function Page() {
                   Post Status
                 </label>
                 <div className="mt-2">
-                  <Select  items={items}  defaultValue={0}  onchange={handleStatusFilter}/>
+                  <Select  items={items}  defaultValue={post?.status}  onchange={handleStatusFilter}/>
                 </div>
                 {state.errors.status && (
                   <p className="text-red-700">{state.errors.status}</p>
@@ -165,7 +180,7 @@ export default function Page() {
                 </label>
                 <ReactQuill
                   theme="snow"
-                  value={content}
+                  value={post?.content}
                   onChange={setContent}
                   modules={modules}
                 />
@@ -174,75 +189,125 @@ export default function Page() {
 
               <div className="flex sm:col-span-2 sm:col-start-1 mt-3">
                   <div className="w-[50%]">
-                    <SingleImageUpload name="thumbnail" title=" Category photo" />
+                    {
+                      post?.thumbnail && (
+                        <SingleImageUpload name="thumbnail" title=" Category photo" initialPhoto={post.thumbnail} />
+                      )
+                      
+                    }
                     {state.errors.thumbnail && (
                       <p className="text-red-700">{state.errors.thumbnail}</p>
                     )}
                   </div>
                   <div className="w-[50%]">
-                      <div className="col-span-full">
-                        <label htmlFor="cover-photo" className=" pl-[25px] block text-sm font-bold leading-6 text-gray-900"> Categories </label>
-                        {state.errors.category_id && (
-                          <p className="text-red-700">{state.errors.category_id}</p>
-                        )}
-                        <div className=" p-[25px] h-[200px] overflow-scroll">
-                          {
-                            categories?.map((item,index)=>(
-                              <div key={index} className="relative flex gap-x-3 p-2">
-                                <div className="flex h-6 items-center">
-                                  <input id={`category${item.id}`} name="category_id[]" value={item.id} type="checkbox" className="cursor-pointer h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600" />
-                                </div>
-                                <div className="text-sm leading-6">
-                                  <label htmlFor={`category${item.id}`} className=" cursor-pointer font-medium text-gray-900"> {item.name} </label>
-                               
-                                </div>
+                    <div className="col-span-full">
+                      <label htmlFor="cover-photo" className="pl-[25px] block text-sm font-bold leading-6 text-gray-900">
+                        Categories
+                      </label>
+                      {state.errors.category_id && (
+                        <p className="text-red-700">{state.errors.category_id}</p>
+                      )}
+                      <div className="p-[25px] h-[200px] overflow-scroll">
+                        {categories?.map((item) => {
+                          const isChecked = post?.categories?.some(category => category.id === item.id);
+                          return (
+                            <div key={item.id} className="relative flex gap-x-3 p-2">
+                              <div className="flex h-6 items-center">
+                                <input
+                                  id={`category${item.id}`}
+                                  name="category_id[]"
+                                  value={item.id}
+                                  type="checkbox"
+                                  className="cursor-pointer h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600"
+                                  defaultChecked={isChecked}
+                                />
                               </div>
-                            ))
-                          }
-                        </div>
-                      </div>
-                  </div>
-              </div>
-              
-
-              <div className=" pb-12 flex">
-                <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
-                  <div className="sm:col-span-3 ">
-                    <div className="relative flex gap-x-3">
-                      <div className="flex h-6 items-center">
-                        <input type="hidden" name="allow_comments" value={0} />
-                        <input id="allow_comments" name="allow_comments" value={1} type="checkbox" className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600" />
-                      </div>
-                      <div className="text-sm leading-6">
-                        <label htmlFor="allow_comments" className="font-medium text-gray-900"> Allow Comments </label>
-                          {state.errors.allow_comments && (
-                            <p className="text-red-700">{state.errors.allow_comments}</p>
-                          )}
+                              <div className="text-sm leading-6">
+                                <label htmlFor={`category${item.id}`} className="cursor-pointer font-medium text-gray-900">
+                                  {item.name}
+                                </label>
+                              </div>
+                            </div>
+                          );
+                        })}
                       </div>
                     </div>
                   </div>
-                  <div className="sm:col-span-3">
+
+              </div>
+              
+
+              <div className="pb-12 flex">
+                <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
+                  
+                  {/* Allow Comments Checkbox */}
+                  {
+                    post?.allow_comments == '1' && (
+                      <div className="sm:col-span-3">
+                        <div className="relative flex gap-x-3">
+                          <div className="flex h-6 items-center">
+                            <input type="hidden" name="allow_comments" value={0} /> 
+                        
+                            <input
+                              id="allow_comments"
+                              name="allow_comments"
+                              value={1}
+                              type="checkbox"
+                              defaultChecked={post.allow_comments == '1'}
+                              className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600"
+                            />
+                          </div>
+                          <div className="text-sm leading-6">
+                            <label htmlFor="allow_comments" className="font-medium text-gray-900">
+                              Allow Comments
+                            </label>
+                            {state.errors.allow_comments && (
+                              <p className="text-red-700">{state.errors.allow_comments}</p>
+                            )}
+                          </div>
+                        </div>
+                      </div>
+                    )
+                  }
+
+
+                  {/* Is Featured Checkbox */}
+                  {
+                    post?.allow_comments == '1' && (
+                    <div className="sm:col-span-3">
                       <div className="relative flex gap-x-3">
                         <div className="flex h-6 items-center">
                           <input type="hidden" name="is_featured" value={0} />
-                          <input id="is_featured" name="is_featured" value='1' type="checkbox" className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600" />
+                          <input
+                            id="is_featured"
+                            name="is_featured"
+                            value={1}
+                            type="checkbox"
+                            defaultChecked={post.is_featured === '1'}
+                            className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600"
+                          />
                         </div>
                         <div className="text-sm leading-6">
-                          <label htmlFor="is_featured" className="font-medium text-gray-900"> isFeatured </label>
+                          <label htmlFor="is_featured" className="font-medium text-gray-900">
+                            Is Featured
+                          </label>
                           {state.errors.is_featured && (
                             <p className="text-red-700">{state.errors.is_featured}</p>
                           )}
                         </div>
                       </div>
-                  </div>
+                    </div>
+                   )
+                  }
                 </div>
               </div>
+
 
 
               <div className="sm:col-span-2 sm:col-start-1 mb-2">
                 <label  htmlFor="tags"  className="block text-sm font-medium leading-6 text-gray-900"> Post tags</label>
                 <div className="mt-2">
-                  <input  id="tags"  name="tags[]"  type="text"  placeholder="Post tags..."  autoComplete="address-level2"  className="pl-2  py-1.5  block w-full rounded-md border-0 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"/>
+                  <input  id="tags"  name="tags" defaultValue={post?.tags}  type="text"  placeholder="Post tags..."  autoComplete="address-level2"  className="pl-2  py-1.5  block w-full rounded-md border-0 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"/>
                 </div>
                 {state.errors.tags && (
                   <p className="text-red-700">{state.errors.tags}</p>
